@@ -1,0 +1,18 @@
+Question 1
+Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.
+
+#Read file
+summarySCC_PM25 <- readRDS("~/Downloads/exdata_data_NEI_data/summarySCC_PM25.rds")
+
+#Aggregate the needed columns, Emissions and Year into a data frame
+aggTotals <- aggregate(Emissions ~ year,summarySCC_PM25, sum)
+
+#Create a barchart
+barplot((aggTotals$Emissions)/10^6, names.arg = aggTotals$year, xlab="Year", ylab="pm2.5 Emissions (10^6)", main="Total pm2.5 Emissions for all US")
+
+#print the plot
+dev.copy(png,"plot1.png", width=480, height=480)
+dev.off()
+
+Question 2
+Have total emissions from PM2.5 decreased in the Baltimore City, Maryland (\color{red}{\verb|fips == "24510"|}fips=="24510") from 1999 to 2008? Use the base plotting system to make a plot answering this question.
