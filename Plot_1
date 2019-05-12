@@ -16,3 +16,51 @@ dev.off()
 
 Question 2
 Have total emissions from PM2.5 decreased in the Baltimore City, Maryland (\color{red}{\verb|fips == "24510"|}fips=="24510") from 1999 to 2008? Use the base plotting system to make a plot answering this question.
+
+#aggregate the values for Baltimore, Maryland (fips == "24510")
+baltimoreOnly <- summarySCC_PM25[summarySCC_PM25$fips=="24510",]
+aggTotalsBalti <- aggregate(Emissions ~year, baltimoreOnly, sum)
+
+barplot(aggTotalsBalti$Emissions, names.arg = aggTotalsBalti$year, xlab="Year", ylab="pm2.5 Emissions (Tons)", main="Total pm2.5 Emissions for Baltimore, Maryland")
+
+#print the plot
+dev.copy(png,"plot2.png", width=480, height=480)
+dev.off()
+
+
+
+#Question 3
+#
+
+
+
+#Question4
+#changed to more meaningful names
+NEI <- summarySCC_PM25 
+SCC <- source_pm25
+
+#used grepl to everything with coal from SCC into new variable SCCcoal
+SCCcoal <- SCC[grepl("coal", SCC$Short.Name, ignore.case = T),]
+
+#combined NEI coal and SCC coal 
+NEIcoal <- NEI[NEI$SCC %in% SCCcoal$SCC,]
+
+#used aggregate to gather all relevant data
+totalCoal <- aggregate(Emissions ~year+type, NEIcoal, sum)
+
+#plot
+ ggplot(totalCoal, aes(year, Emissions, col = type)) +
++     geom_line() +
++     geom_point() +
++     ggtitle(expression("Total US" ~ PM[2.5] ~ "Coal Emission by Type and Year")) +
++     xlab("Year") +
++     ylab(expression("US " ~ PM[2.5] ~ "Coal Emission")) +
++     scale_colour_discrete(name = "Type of sources") +
++     theme(legend.title = element_text(face = "bold"))
+
+#print the plot
+dev.copy(png,"plot4.png", width=480, height=480)
+dev.off()
+
+#Overall we see the emission of the types non-road, nonpoint and on-road has decreased by the years.
+#The point source increased up until 2005 where it took a large decrease, but still above the total emission from 1999, so it actually increased overall. 
