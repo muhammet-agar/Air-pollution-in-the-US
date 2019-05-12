@@ -1,5 +1,5 @@
-Question 1
-Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.
+#Question 1
+#Have total emissions from PM2.5 decreased in the United States from 1999 to 2008? Using the base plotting system, make a plot showing the total PM2.5 emission from all sources for each of the years 1999, 2002, 2005, and 2008.
 
 #Read file
 summarySCC_PM25 <- readRDS("~/Downloads/exdata_data_NEI_data/summarySCC_PM25.rds")
@@ -14,8 +14,10 @@ barplot((aggTotals$Emissions)/10^6, names.arg = aggTotals$year, xlab="Year", yla
 dev.copy(png,"plot1.png", width=480, height=480)
 dev.off()
 
-Question 2
-Have total emissions from PM2.5 decreased in the Baltimore City, Maryland (\color{red}{\verb|fips == "24510"|}fips=="24510") from 1999 to 2008? Use the base plotting system to make a plot answering this question.
+
+
+#Question 2
+#Have total emissions from PM2.5 decreased in the Baltimore City, Maryland (\color{red}{\verb|fips == "24510"|}fips=="24510") from 1999 to 2008? Use the base plotting system to make a plot answering this question.
 
 #aggregate the values for Baltimore, Maryland (fips == "24510")
 baltimoreOnly <- summarySCC_PM25[summarySCC_PM25$fips=="24510",]
@@ -30,11 +32,13 @@ dev.off()
 
 
 #Question 3
-#
+#Of the four types of sources indicated by the \color{red}{\verb|type|}type (point, nonpoint, onroad, nonroad) variable, which of these four sources have seen decreases in emissions from 1999–2008 for Baltimore City? Which have seen increases in emissions from 1999–2008? Use the ggplot2 plotting system to make a plot answer this question.
 
 
 
 #Question4
+#Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
+
 #changed to more meaningful names
 NEI <- summarySCC_PM25 
 SCC <- source_pm25
@@ -64,3 +68,28 @@ dev.off()
 
 #Overall we see the emission of the types non-road, nonpoint and on-road has decreased by the years.
 #The point source increased up until 2005 where it took a large decrease, but still above the total emission from 1999, so it actually increased overall. 
+
+
+#Question 5
+#How have emissions from motor vehicle sources changed from 1999–2008 in Baltimore City?
+
+#create the relevant dataframes
+baltiMotor <- subset(NEI, NEI$fips =="24510" & NEI$type =="ON-ROAD")
+baltiMotorAGG <- aggregate(Emissions ~year, baltiMotor, sum)
+
+#plot the sh*t
+ggplot(baltiMotorAGG, aes(year, Emissions)) +
++   geom_line(col = "steelblue3") +
++   geom_point(col = "steelblue3") +
++   ggtitle(expression("Baltimore " ~ PM[2.5] ~ "Motor Vehicle Emissions by Year")) +
++   xlab("Year") +
++   ylab(expression(~PM[2.5]~ "Motor Vehicle Emissions"))
+
+#print the plot
+dev.copy(png,"plot5.png", width=480, height=480)
+dev.off()
+
+#We clearly see how the emission has decreased with the years. Only a slight decrease from 2002-2005, but eventually it ended up below 100 in 2008. Started at around 350 in 1999.
+
+
+#Question 6
