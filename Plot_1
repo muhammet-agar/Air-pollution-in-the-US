@@ -14,6 +14,7 @@ barplot((aggTotals$Emissions)/10^6, names.arg = aggTotals$year, xlab="Year", yla
 dev.copy(png,"plot1.png", width=480, height=480)
 dev.off()
 
+#As we see on the bar chart PM2.5 has fallen from over 7 to around 3 in the period 1999 to 2008.
 
 
 #Question 2
@@ -29,6 +30,7 @@ barplot(aggTotalsBalti$Emissions, names.arg = aggTotalsBalti$year, xlab="Year", 
 dev.copy(png,"plot2.png", width=480, height=480)
 dev.off()
 
+#In the overall picture, the emissions of pm2.5 have fallen from 1999 - 2008 by almost 1.5 tons.
 
 
 #Question 3
@@ -46,6 +48,7 @@ dev.copy(png,"plot3.png", width=480, height=480)
 dev.off()
 
 #Overall we see the emission of the types non-road, nonpoint and on-road has decreased by the years. The point source increased up until 2005 where it took a large decrease, but still above the total emission from 1999, so it actually increased overall.
+
 
 #Question4
 #Across the United States, how have emissions from coal combustion-related sources changed from 1999–2008?
